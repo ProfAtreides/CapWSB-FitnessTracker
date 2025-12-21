@@ -116,7 +116,6 @@ class UserApiIntegrationTest extends IntegrationTestBase {
                 .andExpect(jsonPath("$[0].firstName").value(user1.getFirstName()))
                 .andExpect(jsonPath("$[0].lastName").value(user1.getLastName()))
                 .andExpect(jsonPath("$[0].birthdate").value(ISO_DATE.format(user1.getBirthdate())))
-
                 .andExpect(jsonPath("$[1]").doesNotExist());
     }
 

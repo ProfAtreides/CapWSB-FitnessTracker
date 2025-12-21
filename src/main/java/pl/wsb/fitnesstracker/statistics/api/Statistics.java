@@ -21,7 +21,7 @@ public class Statistics {
     private Long id;
 
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private User user;
 
     @Column(name = "total_trainings", nullable = false)
