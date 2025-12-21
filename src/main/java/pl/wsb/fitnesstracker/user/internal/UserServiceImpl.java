@@ -3,9 +3,11 @@ package pl.wsb.fitnesstracker.user.internal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pl.wsb.fitnesstracker.user.api.User;
+import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
 import pl.wsb.fitnesstracker.user.api.UserService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +30,35 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
+    public void deleteUser(final Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(userId);
+        }
+        userRepository.deleteById(userId);
+    }
+
+    @Override
+    public User updateUser(final Long userId, final User user) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId));
+
+        if (user.getFirstName() != null) {
+            existingUser.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+            existingUser.setLastName(user.getLastName());
+        }
+        if (user.getBirthdate() != null) {
+            existingUser.setBirthdate(user.getBirthdate());
+        }
+        if (user.getEmail() != null) {
+            existingUser.setEmail(user.getEmail());
+        }
+
+        return userRepository.save(existingUser);
+    }
+
+    @Override
     public Optional<User> getUser(final Long userId) {
         return userRepository.findById(userId);
     }
@@ -40,6 +71,15 @@ class UserServiceImpl implements UserService, UserProvider {
     @Override
     public List<User> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    public List<User> findUsersByEmailFragment(final String emailFragment) {
+        return userRepository.findByEmailContainingIgnoreCase(emailFragment);
+    }
+
+    public List<User> findUsersOlderThan(final int age) {
+        LocalDate birthdateThreshold = LocalDate.now().minusYears(age);
+        return userRepository.findByBirthdateBefore(birthdateThreshold);
     }
 
 }
