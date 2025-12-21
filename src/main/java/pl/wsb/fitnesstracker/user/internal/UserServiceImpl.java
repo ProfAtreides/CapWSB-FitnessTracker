@@ -11,12 +11,20 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type User service.
+ */
 @Service
 @Slf4j
 class UserServiceImpl implements UserService, UserProvider {
 
     private final UserRepository userRepository;
 
+    /**
+     * Instantiates a new User service.
+     *
+     * @param userRepository the user repository
+     */
     UserServiceImpl(final UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -73,10 +81,22 @@ class UserServiceImpl implements UserService, UserProvider {
         return userRepository.findAll();
     }
 
+    /**
+     * Find users by email fragment list.
+     *
+     * @param emailFragment the email fragment
+     * @return the list
+     */
     public List<User> findUsersByEmailFragment(final String emailFragment) {
         return userRepository.findByEmailContainingIgnoreCase(emailFragment);
     }
 
+    /**
+     * Find users older than list.
+     *
+     * @param age the age
+     * @return the list
+     */
     public List<User> findUsersOlderThan(final int age) {
         LocalDate birthdateThreshold = LocalDate.now().minusYears(age);
         return userRepository.findByBirthdateBefore(birthdateThreshold);

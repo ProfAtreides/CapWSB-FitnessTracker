@@ -23,11 +23,22 @@ class UserController {
 
     private final UserMapper userMapper;
 
+    /**
+     * Instantiates a new User controller.
+     *
+     * @param userService the user service
+     * @param userMapper  the user mapper
+     */
     public UserController(UserServiceImpl userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
     }
 
+    /**
+     * Gets all users simple.
+     *
+     * @return the all users simple
+     */
     @GetMapping("/simple")
     public List<UserDtoSimple> getAllUsersSimple() {
         return userService.findAllUsers()
@@ -36,6 +47,11 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Gets all users.
+     *
+     * @return the all users
+     */
     @GetMapping
     public List<UserDto> getAllUsers() {
         return userService.findAllUsers()
@@ -44,6 +60,12 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Gets user by id.
+     *
+     * @param id the id
+     * @return the user by id
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
         return userService.getUser(id)
@@ -52,6 +74,12 @@ class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Create user user dto.
+     *
+     * @param userDto the user dto
+     * @return the user dto
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@RequestBody UserDto userDto) {
@@ -60,12 +88,24 @@ class UserController {
         return userMapper.toDto(createdUser);
     }
 
+    /**
+     * Delete user.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
 
+    /**
+     * Update user user dto.
+     *
+     * @param id      the id
+     * @param userDto the user dto
+     * @return the user dto
+     */
     @PutMapping("/{id}")
     public UserDto updateUser(@PathVariable Long id, @RequestBody UserDto userDto) {
         User user = userMapper.toEntity(userDto);
@@ -73,6 +113,12 @@ class UserController {
         return userMapper.toDto(updatedUser);
     }
 
+    /**
+     * Gets users by email.
+     *
+     * @param email the email
+     * @return the users by email
+     */
     @GetMapping("/email")
     public List<UserEmailDto> getUsersByEmail(@RequestParam String email) {
         return userService.findUsersByEmailFragment(email)
@@ -81,6 +127,12 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Gets users older than.
+     *
+     * @param age the age
+     * @return the users older than
+     */
     @GetMapping("/older/{age}")
     public List<UserDto> getUsersOlderThan(@PathVariable int age) {
         return userService.findUsersOlderThan(age)
@@ -89,6 +141,12 @@ class UserController {
                 .toList();
     }
 
+    /**
+     * Handle user not found exception response entity.
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());

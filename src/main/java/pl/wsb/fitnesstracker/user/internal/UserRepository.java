@@ -9,6 +9,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The interface User repository.
+ */
 interface UserRepository extends JpaRepository<User, Long> {
 
     /**
@@ -23,6 +26,12 @@ interface UserRepository extends JpaRepository<User, Long> {
                 .findFirst();
     }
 
+    /**
+     * Find by email containing ignore case list.
+     *
+     * @param emailFragment the email fragment
+     * @return the list
+     */
     default List<User> findByEmailContainingIgnoreCase(String emailFragment) {
         return findAll().stream()
                 .filter(user -> user.getEmail() != null &&
@@ -30,6 +39,12 @@ interface UserRepository extends JpaRepository<User, Long> {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Find by birthdate before list.
+     *
+     * @param birthdate the birthdate
+     * @return the list
+     */
     default List<User> findByBirthdateBefore(LocalDate birthdate) {
         return findAll().stream()
                 .filter(user -> user.getBirthdate() != null &&
