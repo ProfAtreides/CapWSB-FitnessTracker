@@ -9,6 +9,7 @@ import pl.wsb.fitnesstracker.user.api.UserDtoSimple;
 import pl.wsb.fitnesstracker.user.api.UserEmailDto;
 import pl.wsb.fitnesstracker.user.api.UserNotFoundException;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -130,12 +131,12 @@ class UserController {
     /**
      * Gets users older than.
      *
-     * @param age the age
+     * @param time the age
      * @return the users older than
      */
-    @GetMapping("/older/{age}")
-    public List<UserDto> getUsersOlderThan(@PathVariable int age) {
-        return userService.findUsersOlderThan(age)
+    @GetMapping("/older/{time}")
+    public List<UserDto> getUsersOlderThan(@PathVariable LocalDate time) {
+        return userService.findUsersOlderThan(time)
                 .stream()
                 .map(userMapper::toDto)
                 .toList();

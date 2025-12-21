@@ -97,9 +97,8 @@ class UserServiceImpl implements UserService, UserProvider {
      * @param age the age
      * @return the list
      */
-    public List<User> findUsersOlderThan(final int age) {
-        LocalDate birthdateThreshold = LocalDate.now().minusYears(age);
-        return userRepository.findByBirthdateBefore(birthdateThreshold);
+    public List<User> findUsersOlderThan(final LocalDate age) {
+        return userRepository.findByBirthdateBefore(age);
     }
 
 }
