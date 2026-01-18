@@ -1,0 +1,108 @@
+{
+	"info": {
+		"_postman_id": "de28b2cd-868c-46f9-b04c-94475836cdb4",
+		"name": "java",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32697523"
+	},
+	"item": [
+		{
+			"name": "getUsers",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "postUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "id",
+							"value": "67",
+							"type": "text"
+						},
+						{
+							"key": "firstName",
+							"value": "Postman",
+							"type": "text"
+						},
+						{
+							"key": "lastName",
+							"value": "Test",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "1410-10-15",
+							"type": "text"
+						},
+						{
+							"key": "birthDate",
+							"value": "1991-11-11",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "postman@test.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "/v1/users",
+					"path": [
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getEmail",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getOld",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "getSimple",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "putMan",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
